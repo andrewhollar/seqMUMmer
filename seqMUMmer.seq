@@ -1,0 +1,99 @@
+from mumSuffixTree import SuffixTree
+import sys
+
+def runSEQMUMmer(inputReference: str, inputQuery: str, isReverseComplement: bool, prefix: str, minimumMatch: int):
+    import time
+    start = time.time()
+    #Build the suffix tree
+    ust = SuffixTree(inputReference, inputQuery, isReverseComplement, prefix)
+    end = time.time()
+    print(str(end - start) + " sec to build Suffix Tree")
+
+    start = time.time()
+    #Get increasing subset of MUMs
+    lis = ust.getMaximalSubstrings(minimumMatch)
+    end = time.time()
+    print(str(end - start) + " sec to get longest increasing subset of MUMs")
+
+    start = time.time()
+    #Construct full alignment
+    aligned = ust.constructAlignment(lis)
+    end = time.time()
+    print(str(end - start) + " sec to construct alignment")
+
+    start = time.time()
+    #Write the fully aligned strings to output file
+    with open(prefix + ".ref.align", 'w') as f:
+        f.write(aligned[0])
+
+    with open(prefix + ".qry.align", 'w') as f:
+        f.write(aligned[1])
+    end = time.time()
+
+    print(str(end - start) + " sec to write the outputs")
+
+#Print the help information to the console
+if '-help' in sys.argv:
+    print("\nWelcome to seqMUMmer. \nThis is an alignment program designed for similar genomes.")
+    print("Use the following command to run: ")
+    print("\t seqc seqMUMmer.seq <reference.FASTA> <query.FASTA> <prefix> [options]")
+    print("\nThe options are as follows:")
+    print("\t -n  To use case insensitivity on the input sequences.")
+    print("\t -l  [int] to set minimum match length. (Default: 20)")
+    print("\t -r  To use the reverse complement of the query sequence.")
+
+    print("\nThe output of this program is 3 files:")
+    print("\t 1. <prefix>.mums: Contains a list of increasing subset of MUMs found. Three columns: start position in reference, start position in query, length of match")
+    print("\t 2. <prefix>.ref.align: Contains the string alignment of the reference sequence.")
+    print("\t 3. <prefix>.qry.align: Contains the string alignment of the query sequence.\n")
+else:
+    #Initialize variables
+    inputReference = ""
+    inputQuery = ""
+    prefix = ""
+    isReverseComplement = False
+    minimumMatch = 20
+
+    #Load input sequence #1: Reference
+    #Note: will only load the last read in the FASTA file as input reference
+    #Assumption: FASTA file contains only one read
+    try:
+        for r in FASTA(sys.argv[1], fai = False):
+            inputReference = str(r.seq)
+    except:
+        print("Include path to Reference FASTA file.")
+
+    #Load input sequence #2: Query
+    #Note: will only load the last read in the FASTA file as input query
+    #Assumption: FASTA file contains only one read
+    try:
+        for r in FASTA(sys.argv[2], fai = False):
+            inputQuery = str(r.seq)
+    except:
+        print("Include path to Query FASTA file.")
+
+    #Prefix that will be used to generate output files
+    try:
+        prefix = sys.argv[3]
+    except:
+        print("Include prefix for output files.")
+
+    #Check if the command line argument for case insensitivity is present. 
+    if '-n' in sys.argv:
+        inputReference = inputReference.upper()
+        inputQuery = inputQuery.upper()
+
+    #Check if the command line argument to set minimum match is present
+    if '-l' in sys.argv:
+        try:
+            minimumMatch = int(sys.argv[sys.argv.index('-l') + 1])
+        except:
+            print("No minimum length provided as input, using default of 20")
+
+    #Check if the command line argument to use the reverse complement of query is present
+    if '-r' in sys.argv:
+        inputQuery = str(~seq(inputQuery))
+        isReverseComplement = True
+
+    if inputReference != "" and inputQuery != "" and prefix != "":
+        runSEQMUMmer(inputReference, inputQuery, isReverseComplement, prefix, minimumMatch)

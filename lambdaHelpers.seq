@@ -1,0 +1,11 @@
+#Function used to get the last position in MUM tuple for sorting
+def getPos2(t: tuple[int,int,int]):
+    return t[2]
+
+#Function used to get the middle position in MUM tuple for sorting
+def getPos1(t: tuple[int,int,int]):
+    return t[1]
+
+#Function used to ge the first position in MUM tuple for sorting
+def getPos0(t: tuple[int,int,int]):
+    return t[0]
