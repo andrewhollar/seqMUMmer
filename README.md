@@ -1,2 +1,3 @@
 # seqMUMmer
-Reimagination of the original MUMmer algorithm in Seq.
+Reimplementation of the original MUMmer algorithm in Seq.
+
