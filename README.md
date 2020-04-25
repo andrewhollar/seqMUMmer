@@ -1,5 +1,5 @@
 # seqMUMmer
-Reimplementation of the original MUMmer algorithm in Seq. **MUMmer** is a whole genome aligner that uses a suffix tree data structure to efficiently find maximally unique matching regions between two input sequences. This aligner is designed for use on highly similar genomes.
+Reimplementation of the original MUMmer algorithm in Seq. **MUMmer** is a whole genome aligner that uses a suffix tree data structure to efficiently find maximally unique matching (MUM) regions between two input sequences. This aligner is designed for use on highly similar genomes.
 
 Requires the Seq programming language. Download Seq [here](https://seq-lang.org).
 
