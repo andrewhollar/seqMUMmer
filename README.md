@@ -14,3 +14,4 @@ Use the following to run: `seqc seqMUMmer.seq <reference.FASTA> <query.FASTA> <p
 * -l int: to set minimum match length
 * -r: use the reverse complement of query sequence
 * -mum: use to only output MUMs 
+* -help: for information on running seqMUMmer
