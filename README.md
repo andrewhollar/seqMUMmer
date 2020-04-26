@@ -10,8 +10,8 @@ Use the following to run: `seqc seqMUMmer.seq <reference.FASTA> <query.FASTA> <p
 * prefix: string that is used in naming output files
 
 #### Options
-* -n: use for case insensitivity
-* -l int: to set minimum match length
-* -r: use the reverse complement of query sequence
-* -mum: use to only output MUMs 
-* -help: for information on running seqMUMmer
+* *-n*: use for case insensitivity
+* *-l int*: to set minimum match length
+* *-r*: use the reverse complement of query sequence
+* *-mum*: use to only output MUMs 
+* *-help*: for information on running seqMUMmer
